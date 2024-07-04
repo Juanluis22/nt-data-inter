@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <div class="my-custom-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"> Details {{ comment.manual_data["so"] }} </h5>
+                        <p class="card-text">Client name: {{ comment.manual_data["client_name"] }}</p>
+                        <p class="card-text">Group: {{ comment.manual_data["group"] }}</p>
+                        <p class="card-text">Project name: {{ comment.manual_data["project_name"] }}</p>
+                        <p class="card-text">PO: {{ comment.manual_data["po"] }}</p>
+                        <p class="card-text">Direct quote approved: {{ comment.manual_data["direct_quote_approved"] }}
+                        </p>
+                        <p class="card-text">Vendor: {{ comment.manual_data["vendor"] }}</p>
+                        <p class="card-text">MS: {{ comment.manual_data["ms"] }}</p>
+                        <p class="card-text">Business unit:{{ comment.manual_data["business_unit"] }}</p>
+                        <p class="card-text">PM: {{ comment.manual_data["pm"] }}</p>
+                        <p class="card-text">Project type: {{ comment.manual_data["project_type"] }}</p>
+                        <p class="card-text">Start date: {{ comment.manual_data["start_date"].strftime('%d-%m-%Y') }}
+                        </p>
+                        <p class="card-text">End date: {{ comment.manual_data["end_date"].strftime('%d-%m-%Y' ) }}</p>
+                        <p class="card-text">Aging month: {{ comment.manual_data["aging_month"] }}</p>
+                        <p class="card-text">Aging group: {{ comment.manual_data["aging_group"] }}</p>
+                        <p class="card-text">Psg p budgeted: {{ comment.manual_data["psg_p_budgeted"] }}</p>
+                        <p class="card-text">gp budgeted 3rd parties: {{ comment.manual_data["gp_budgeted_3rd_parties"]
+                            }}</p>
+                        <p class="card-text">total gp budgeted: {{ comment.manual_data["total_gp_budgeted"] }}</p>
+                        <p class="card-text">currency: {{ comment.manual_data["currency"] }}</p>
+                        <p class="card-text">budgeted ps nntcl revenue po currency: {{
+                            comment.manual_data["budgeted_ps_nntcl_revenue_po_currency"] }}</p>
+                        <p class="card-text">budgeted 3rd party revenue po currency: {{
+                            comment.manual_data["budgeted_3rd_party_revenue_po_currency"] }}</p>
+                        <p class="card-text">total budgeted revenue po currency: {{
+                            comment.manual_data["total_budgeted_revenue_po_currency"] }}</p>
+                        <p class="card-text">budgeted ps cost po currency: {{
+                            comment.manual_data["budgeted_ps_cost_po_currency"] }}
+                        </p>
+                        <p class="card-text">budgeted 3rd parties cost po currency: {{
+                            comment.manual_data["budgeted_3rd_parties_cost_po_currency"] }}</p>
+                        <p class="card-text">total budgeted cost po currency: {{
+                            comment.manual_data["total_budgeted_cost_po_currency"]
+                            }}</p>
+                        <p class="card-text">budgeted ps nntcl revenue usd: {{
+                            comment.manual_data["budgeted_ps_nntcl_revenue_usd"] }}
+                        </p>
+                        <p class="card-text">budgeted 3rd party revenue usd: {{
+                            comment.manual_data["budgeted_3rd_party_revenue_usd"]
+                            }}</p>
+                        <p class="card-text">total budgeted revenue usd: {{
+                            comment.manual_data["total_budgeted_revenue_usd"] }}
+                        </p>
+                        <p class="card-text">budgeted ps cost usd: {{ comment.manual_data["budgeted_ps_cost_usd"] }}</p>
+                        <p class="card-text">budgeted 3rd parties cost usd: {{
+                            comment.manual_data["budgeted_3rd_parties_cost_usd"] }}
+                        </p>
+                        <p class="card-text">total budgeted cost usd: {{ comment.manual_data["total_budgeted_cost_usd"]
+                            }}</p>
+                        <p class="card-text">subcontractor currency: {{ comment.manual_data["subcontractor_currency"] }}
+                        </p>
+                        <p class="card-text">total subcontractor cost rq currency: {{
+                            comment.manual_data["total_subcontractor_cost_rq_currency"] }}</p>
+                        <p class="card-text">country: {{ comment.manual_data["country"] }}</p>
+                        <p class="card-text">previous fy recognition: {{ comment.manual_data["previous_fy_recognition"]
+                            }}</p>
+                        <p class="card-text">actual revenue recognition percent: {{
+                            comment.manual_data["actual_revenue_recognition_percent"] }}</p>
+                        <p class="card-text">pending revenue recognition fy23 percent: {{
+                            comment.manual_data["pending_revenue_recognition_fy23_percent"] }}</p>
+                        <p class="card-text">forecast project completed fy23 percent: {{
+                            comment.manual_data["forecast_project_completed_fy23_percent"] }}</p>
+                        <p class="card-text">actual backlog usd: {{ comment.manual_data["actual_backlog_usd"] }}</p>
+                        <p class="card-text">project state: {{ comment.manual_data["project_state"] }}</p>
+                        <p class="card-text">advanced category2: {{ comment.manual_data["advanced_category2"] }}</p>
+                        <p class="card-text">tecnologia principal: {{ comment.manual_data["tecnologia_principal"] }}</p>
+                        <p class="card-text">tecnologia secundaria: {{ comment.manual_data["tecnologia_secundaria"] }}
+                        </p>
+                        <p class="card-text">tecnologia secundaria2: {{ comment.manual_data["tecnologia_secundaria2"] }}
+                        </p>
+                        <p class="card-text">technical lead: {{ comment.manual_data["technical_lead"] }}</p>
+                        <p class="card-text">ingeniero1: {{ comment.manual_data["ingeniero1"] }}</p>
+                        <p class="card-text">ingeniero2: {{ comment.manual_data["ingeniero2"] }}</p>
+                        <p class="card-text">ingeniero3: {{ comment.manual_data["ingeniero3"] }}</p>
+                        <p class="card-text">ingeniero4: {{ comment.manual_data["ingeniero4"] }}</p>
+                        <p class="card-text">ingeniero5: {{ comment.manual_data["ingeniero5"] }}</p>
+                        <p class="card-text">ingeniero6: {{ comment.manual_data["ingeniero6"] }}</p>
+                        <p class="card-text">ingeniero7: {{ comment.manual_data["ingeniero7"] }}</p>
+                        <p class="card-text">Responsable: {{ comment.manual_data["responsible_name"] }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="my-custom-card">
+                <div class="card">
+
+                    <div class="card-body">
+                        <h5 class="card-title">Edit Comment</h5>
+                        <form method="POST" action="{{ url_for('editar_comen', comment_id=comment.id) }}">
+                            <div class="form-group">
+                                <label for="comment">Comment</label>
+                                <textarea class="form-control" id="comment" name="comment"
+                                    rows="3">{{ comment.comment }}</textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

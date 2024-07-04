@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<html>
+<head>
+    <title>Welcome to Professional Services App</title>
+</head>
+<body>
+    <h1>Welcome</h1>
+    <p>Nombre de usuario: {{ user.displayName }}</p>
+    <a href="/logout">Cerrar sesión</a>
+</body>
+</html>
+
+{% endblock %}

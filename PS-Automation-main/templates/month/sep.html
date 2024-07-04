@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingresar Monthly Forecast para Septiembre</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    {% extends 'base.html' %}
+
+    {% block content %}
+    <main class="m-5">
+        <h1 class="text-center">Ingresar Monthly Forecast para Septiembre</h1>
+        <!-- Mostrar mensajes de error y éxito -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <form method="POST" action="{{ url_for('add_data_forecast_month', month='sep', so_id=so_id) }}" id="forecastForm"
+            data-actual-recognition-percent="{{ manual_data.actual_revenue_recognition_percent }}"
+            data-total-budgeted-revenue-usd="{{ manual_data.total_budgeted_revenue_usd }}"
+            data-previous-fy-recognition="{{ manual_data.previous_fy_recognition }}">
+            <input type="hidden" name="so_id" value="{{ so_id }}">
+
+            <div class="form-group mb-3">
+                <label for="forecast_advance_sep_percent">Forecast Advance SEP %</label>
+                <input type="number" step="0.01" class="form-control" name="forecast_advance_sep_percent" id="forecast_advance_sep_percent" required oninput="calculateForecast()">
+            </div>
+            <div class="form-group mb-3">
+                <label for="forecast_project_completed_sep_percent">Forecast Project Completed SEP %</label>
+                <input type="number" step="0.01" class="form-control" name="forecast_project_completed_sep_percent" id="forecast_project_completed_sep_percent" readonly>
+            </div>
+            <div class="form-group mb-3">
+                <label for="forecast_total_recognition_sep_usd">Forecast Total Recognition SEP USD</label>
+                <input type="number" step="0.01" class="form-control" name="forecast_total_recognition_sep_usd" id="forecast_total_recognition_sep_usd" readonly>
+            </div>
+            <div class="form-group mb-3">
+                <label for="real_advance_sep_percent">Real Advance SEP %</label>
+                <input type="number" step="0.01" class="form-control" name="real_advance_sep_percent" id="real_advance_sep_percent" required oninput="calculateReal()">
+            </div>
+            <div class="form-group mb-3">
+                <label for="real_project_completed_sep_percent">Real Project Completed SEP %</label>
+                <input type="number" step="0.01" class="form-control" name="real_project_completed_sep_percent" id="real_project_completed_sep_percent" readonly>
+            </div>
+            <div class="form-group mb-3">
+                <label for="real_total_recognition_sep_usd">Real Total Recognition SEP USD</label>
+                <input type="number" step="0.01" class="form-control" name="real_total_recognition_sep_usd" id="real_total_recognition_sep_usd" readonly>
+            </div>
+            <div class="btn-container">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+        </form>
+    </main>
+    {% endblock %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('forecastForm');
+            const manualData = {
+                actualRecognitionPercent: parseFloat(form.dataset.actualRecognitionPercent) || 0,
+                totalBudgetedRevenueUSD: parseFloat(form.dataset.totalBudgetedRevenueUsd) || 0,
+                previousFYRecognition: parseFloat(form.dataset.previousFyRecognition) || 0
+            };
+
+            function calculateForecast() {
+                const forecastAdvancePercent = parseFloat(document.getElementById('forecast_advance_sep_percent').value) || 0;
+
+                // Calcular Forecast Project Completed SEP %
+                document.getElementById('forecast_project_completed_sep_percent').value = (manualData.actualRecognitionPercent + forecastAdvancePercent).toFixed(2);
+
+                // Calcular Forecast Total Recognition SEP USD
+                document.getElementById('forecast_total_recognition_sep_usd').value = ((forecastAdvancePercent * manualData.totalBudgetedRevenueUSD) / 100).toFixed(2);
+            }
+
+            function calculateReal() {
+                const realAdvancePercent = parseFloat(document.getElementById('real_advance_sep_percent').value) || 0;
+
+                // Calcular Real Total Recognition SEP USD
+                document.getElementById('real_total_recognition_sep_usd').value = ((realAdvancePercent * manualData.totalBudgetedRevenueUSD) / 100).toFixed(2);
+
+                // Calcular Real Project Completed SEP %
+                document.getElementById('real_project_completed_sep_percent').value = (manualData.actualRecognitionPercent + realAdvancePercent).toFixed(2);
+            }
+
+            document.getElementById('forecast_advance_sep_percent').addEventListener('input', calculateForecast);
+            document.getElementById('real_advance_sep_percent').addEventListener('input', calculateReal);
+        });
+    </script>
+</body>
+</html>

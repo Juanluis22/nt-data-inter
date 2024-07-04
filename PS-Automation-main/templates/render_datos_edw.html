@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<head>
+    <title>Render Datos EDW</title>
+</head>
+<body>
+    <h1>Datos:</h1>
+    <ul>
+        {% for dato in datos %}
+            <li>{{ dato }}</li>
+        {% endfor %}
+    </ul>
+</body>
+{% endblock %}

@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col-md-6 mb-3 ">
+            <div class="my-custom-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="card-title"> Details {{ datos_so["so"] }}
+                                <a href="/editar_datos/{{ datos_so['so'] }}" class="btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit"
+                                        width="12" height="12" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000"
+                                        fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                                        <path
+                                            d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                                        <path d="M16 5l3 3" />
+                                    </svg>
+                                </a>
+                            </h5>
+
+                            <!-- botón para exportar a PDF -->
+
+                            <form method="GET" action="/export_to_pdf/{{ datos_so['so'] }}" class="mb-3">
+                                <button type="submit" class="btn btn-outline-danger"><svg
+                                        xmlns=" http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-filetype-pdf" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5zM1.6 11.85H0v3.999h.791v-1.342h.803q.43 0 .732-.173.305-.175.463-.474a1.4 1.4 0 0 0 .161-.677q0-.375-.158-.677a1.2 1.2 0 0 0-.46-.477q-.3-.18-.732-.179m.545 1.333a.8.8 0 0 1-.085.38.57.57 0 0 1-.238.241.8.8 0 0 1-.375.082H.788V12.48h.66q.327 0 .512.181.185.183.185.522m1.217-1.333v3.999h1.46q.602 0 .998-.237a1.45 1.45 0 0 0 .595-.689q.196-.45.196-1.084 0-.63-.196-1.075a1.43 1.43 0 0 0-.589-.68q-.396-.234-1.005-.234zm.791.645h.563q.371 0 .609.152a.9.9 0 0 1 .354.454q.118.302.118.753a2.3 2.3 0 0 1-.068.592 1.1 1.1 0 0 1-.196.422.8.8 0 0 1-.334.252 1.3 1.3 0 0 1-.483.082h-.563zm3.743 1.763v1.591h-.79V11.85h2.548v.653H7.896v1.117h1.606v.638z" />
+                                    </svg>
+                                    PDF
+                                </button>
+
+                            </form>
+                        </div>
+
+                        <p class="card-text">Client name: {{ datos_so["client_name"] }}</p>
+                        <p class="card-text">Group: {{ datos_so["group"] }}</p>
+                        <p class="card-text">Project name: {{ datos_so["project_name"] }}</p>
+                        <p class="card-text">PO: {{ datos_so["po"] }}</p>
+                        <p class="card-text">Direct quote approved: {{ datos_so["direct_quote_approved"] }}</p>
+                        <p class="card-text">Vendor:{{ datos_so["vendor"] }}</p>
+                        <p class="card-text">MS: {{ datos_so["ms"] }}</p>
+                        <p class="card-text">Business unit: {{ datos_so["business_unit"] }}</p>
+                        <p class="card-text">PM: {{ datos_so["pm"] }}</p>
+                        <p class="card-text">Project type: {{ datos_so["project_type"] }}</p>
+                        <p class="card-text">Start date: {{ datos_so["start_date"].strftime('%d-%m-%Y') }}</p>
+                        <p class="card-text">End date: {{ datos_so["end_date"].strftime('%d-%m-%Y' ) }}</p>
+                        <p class="card-text">Aging month: {{ datos_so["aging_month"] }}</p>
+                        <p class="card-text">Aging group: {{ datos_so["aging_group"] }}</p>
+                        <p class="card-text">Psg p budgeted: {{ datos_so["psg_p_budgeted"] }}</p>
+                        <p class="card-text">gp budgeted 3rd parties: {{ datos_so["gp_budgeted_3rd_parties"] }}</p>
+                        <p class="card-text">total gp budgeted: {{ datos_so["total_gp_budgeted"] }}</p>
+                        <p class="card-text">currency: {{ datos_so["currency"] }}</p>
+                        <p class="card-text">budgeted ps nntcl revenue po currency: {{
+                            datos_so["budgeted_ps_nntcl_revenue_po_currency"] }}</p>
+                        <p class="card-text">budgeted 3rd party revenue po currency: {{
+                            datos_so["budgeted_3rd_party_revenue_po_currency"] }}</p>
+                        <p class="card-text">total budgeted revenue po currency: {{
+                            datos_so["total_budgeted_revenue_po_currency"] }}</p>
+                        <p class="card-text">budgeted ps cost po currency: {{ datos_so["budgeted_ps_cost_po_currency"]
+                            }}
+                        </p>
+                        <p class="card-text">budgeted 3rd parties cost po currency: {{
+                            datos_so["budgeted_3rd_parties_cost_po_currency"] }}</p>
+                        <p class="card-text">total budgeted cost po currency: {{
+                            datos_so["total_budgeted_cost_po_currency"]
+                            }}</p>
+                        <p class="card-text">budgeted ps nntcl revenue usd: {{ datos_so["budgeted_ps_nntcl_revenue_usd"]
+                            }}
+                        </p>
+                        <p class="card-text">budgeted 3rd party revenue usd: {{
+                            datos_so["budgeted_3rd_party_revenue_usd"]
+                            }}</p>
+                        <p class="card-text">total budgeted revenue_usd: {{ datos_so["total_budgeted_revenue_usd"] }}
+                        </p>
+                        <p class="card-text">budgeted ps cost usd: {{ datos_so["budgeted_ps_cost_usd"] }}</p>
+                        <p class="card-text">budgeted 3rd parties cost usd: {{ datos_so["budgeted_3rd_parties_cost_usd"]
+                            }}
+                        </p>
+                        <p class="card-text">total budgeted cost usd: {{ datos_so["total_budgeted_cost_usd"] }}</p>
+                        <p class="card-text">subcontractor currency: {{ datos_so["subcontractor_currency"] }}</p>
+                        <p class="card-text">total subcontractor cost rq currency: {{
+                            datos_so["total_subcontractor_cost_rq_currency"] }}</p>
+                        <p class="card-text">country: {{ datos_so["country"] }}</p>
+                        <p class="card-text">previous fy recognition: {{ datos_so["previous_fy_recognition"] }}</p>
+                        <p class="card-text">actual revenue recognition percent: {{
+                            datos_so["actual_revenue_recognition_percent"] }}</p>
+                        <p class="card-text">pending revenue recognition fy23 percent: {{
+                            datos_so["pending_revenue_recognition_fy23_percent"] }}</p>
+                        <p class="card-text">forecast project completed fy23 percent: {{
+                            datos_so["forecast_project_completed_fy23_percent"] }}</p>
+                        <p class="card-text">actual backlog usd: {{ datos_so["actual_backlog_usd"] }}</p>
+                        <p class="card-text">project state: {{ datos_so["project_state"] }}</p>
+                        <p class="card-text">advanced category2: {{ datos_so["advanced_category2"] }}</p>
+                        <p class="card-text">tecnologia principal: {{ datos_so["tecnologia_principal"] }}</p>
+                        <p class="card-text">tecnologia secundaria: {{ datos_so["tecnologia_secundaria"] }}</p>
+                        <p class="card-text">tecnologia secundaria2: {{ datos_so["tecnologia_secundaria2"] }}</p>
+                        <p class="card-text">technical lead: {{ datos_so["technical_lead"] }}</p>
+                        <p class="card-text">ingeniero1: {{ datos_so["ingeniero1"] }}</p>
+                        <p class="card-text">ingeniero2: {{ datos_so["ingeniero2"] }}</p>
+                        <p class="card-text">ingeniero3: {{ datos_so["ingeniero3"] }}</p>
+                        <p class="card-text">ingeniero4: {{ datos_so["ingeniero4"] }}</p>
+                        <p class="card-text">ingeniero5: {{ datos_so["ingeniero5"] }}</p>
+                        <p class="card-text">ingeniero6: {{ datos_so["ingeniero6"] }}</p>
+                        <p class="card-text">ingeniero7: {{ datos_so["ingeniero7"] }}</p>
+                        <p class="card-text">Responsable: {{ datos_so["responsible_name"] }}</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-6 ">
+            <div class="my-custom-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Comments of {{ datos_so["so"] }}</h5>
+                        <ul class="card-list">
+                            {% for comment in datos_so.comments %}
+                            <li>{{ comment.comment }}
+                                {% if comment.comment != "SO creado por " + session["user"]["name"] and comment.comment
+                                != "SO Editado por " + session["user"]["name"] %}
+                                <a href="/editar_comen/{{ comment.id }}" class="btn btn-light"><svg
+                                        xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit"
+                                        width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50"
+                                        fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                                        <path
+                                            d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                                        <path d="M16 5l3 3" />
+                                    </svg></a>
+                                {% endif %}
+
+                            </li>
+                            <p>Published: {{ comment.created_at.strftime('%d-%m-%Y - %H:%M:%S') }} </p>
+                            {% if comment.edited_at %}
+                            <p>Edited: {{ comment.edited_at.strftime('%d-%m-%Y - %H:%M:%S') }}</p>
+                            {% endif %}
+                            {% endfor %}
+                            {% if not datos_so["comments"] %}
+                            <li>No comments yet.</li>
+                            {% endif %}
+                        </ul>
+                        <form method="post">
+                            <div class="form-group">
+                                <label for="comments">Add a comment:</label>
+                                <textarea class="form-control" id="comments" name="comments" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-outline-success">Save Comment</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

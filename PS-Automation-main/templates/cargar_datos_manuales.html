@@ -1,0 +1,427 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script>
+    let contador = 2;
+
+    function agregarCampo() {
+        if (contador <= 7) {
+            const encabezadosContainer = document.getElementById('encabezados-container');
+            const camposContainer = document.getElementById('campos-container');
+
+            // Crear nuevo td
+            const nuevoTd = document.createElement('td');
+            nuevoTd.innerHTML = `<input type="text" class="form-control wide-input" name="ingeniero${contador}">`;
+            camposContainer.appendChild(nuevoTd);
+
+            // Crear nuevo th
+            const nuevoTh = document.createElement('th');
+            nuevoTh.classList.add('th-with-button');
+
+            // Crear el elemento del botón
+            const boton = document.createElement('button');
+            boton.type = 'button';
+            boton.textContent = '+';
+            boton.onclick = agregarCampo;
+            boton.classList.add('btn', 'btn-outline-light', 'btn-sm', 'pt-0', 'pb-0'); // Agregar clases de Bootstrap
+            // Agregar el texto "Ingeniero" y el contador al th
+            const textoTh = document.createTextNode(`Ingeniero ${contador} `);
+            nuevoTh.appendChild(textoTh);
+
+            // Agregar el botón al th
+            nuevoTh.appendChild(boton);
+
+            // Agregar el th al contenedor de encabezados
+            encabezadosContainer.appendChild(nuevoTh);
+
+            contador++;
+        } else {
+            alert('Se ha alcanzado el límite de 7 campos.');
+        }
+    }
+
+</script>
+
+<main class="m-5">
+    <h1 class="text-center">Manual Data Upload</h1>
+    <!-- Mostrar mensajes de error y éxito -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <form method="POST" action="{{ url_for('cargar_datos_manuales') }}">
+        <div class="form-group table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr id="encabezados-container">
+                        <th>Sales Order</th>
+                        <th>Client Name</th>
+                        <th>Group</th>
+                        <th>Project Name</th>
+                        <th>Purchase Order</th>
+                        <th>Direct Quote Approved</th>
+                        <th>Vendor</th>
+                        <th>Managed Services</th>
+                        <th>Business Unit</th>
+                        <th>Project Manager</th>
+                        <th>Project Type</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Aging Month</th>
+                        <th>Aging Group</th>
+                        <th>PSGP Budgeted</th>
+                        <th>GP Budgeted 3rd Parties</th>
+                        <th>Total GP Budgeted</th>
+                        <th>Currency</th>
+                        <th>Budgeted PS NNTCL Revenue PO Currency</th>
+                        <th>Budgeted 3rd Party Revenue PO Currency</th>
+                        <th>Total Budgeted Revenue PO Currency</th>
+                        <th>Budgeted PS Cost PO Currency</th>
+                        <th>Budgeted 3rd Parties Cost PO Currency</th>
+                        <th>Total Budgeted Cost PO Currency</th>
+                        <th>Budgeted PS NNTCL Revenue USD</th>
+                        <th>Budgeted 3rd Party Revenue USD</th>
+                        <th>Total Budgeted Revenue USD</th>
+                        <th>Budgeted PS Cost USD</th>
+                        <th>Budgeted 3rd Parties Cost USD</th>
+                        <th>Total Budgeted Cost USD</th>
+                        <th>Subcontractor Currency</th>
+                        <th>Total Subcontractor Cost RQ Currency</th>
+                        <th>Country</th>
+                        <th>Previous FY Recognition</th>
+                        <th>Actual Revenue Recognition Percent</th>
+                        <th>Pending Revenue Recognition FY23 Percent</th>
+                        <th>Forecast Project Completed FY23 Percent</th>
+                        <th>Actual Backlog USD</th>
+                        <th>Project State</th>
+                        <th>Advanced Category2</th>
+                        <th>Tecnología Principal</th>
+                        <th>Tecnología Secundaria</th>
+                        <th>Tecnología Secundaria2</th>
+                        <th>Technical Lead</th>
+                        <th class="th-with-button">
+                            Ingeniero 1
+                            <button type="button" class="btn btn-outline-light btn-sm pt-0 pb-0"
+                                onclick="agregarCampo()">+</button>
+                        </th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id="campos-container">
+                        <td><input type="text" class="form-control wide-input" name="so" value="{{ form_data['so'] if form_data else '' }}" required></td>
+                        <td><input type="text" class="form-control wide-input" name="client_name" value="{{ form_data['client_name'] if form_data else '' }}" required></td>
+                        <td><input type="text" class="form-control wide-input" name="group" value="{{ form_data['group'] if form_data else '' }}" required></td>
+                        <td><input type="text" class="form-control wide-input" name="project_name" value="{{ form_data['project_name'] if form_data else '' }}" required></td>
+                        <td><input type="text" class="form-control wide-input" name="po" value="{{ form_data['po'] if form_data else '' }}" required></td>
+                        <td><input type="number" step="0.01" class="form-control wide-input" name="direct_quote_approved" value="{{ form_data['direct_quote_approved'] if form_data else '' }}" required></td>
+                        <td><input type="text" class="form-control wide-input" name="vendor" value="{{ form_data['vendor'] if form_data else '' }}" required></td>
+                        <td>
+                            <select class="form-control wide-input" name="ms" required>
+                                <option value="Yes" {{ 'selected' if form_data and form_data.get('ms') == 'Yes' else '' }}>Yes</option>
+                                <option value="No" {{ 'selected' if form_data and form_data.get('ms') == 'No' else '' }}>No</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-control wide-input" name="business_unit" required>
+                                <option value="TS" {{ 'selected' if form_data and form_data.get('business_unit') == 'TS' else '' }}>TS</option>
+                                <option value="CS" {{ 'selected' if form_data and form_data.get('business_unit') == 'CS' else '' }}>CS</option>
+                                
+                                <!-- Agrega más opciones según sea necesario -->
+                            </select>
+                        </td>
+                        <td><input type="text" class="form-control wide-input" name="pm" value="{{ form_data['pm'] if form_data else '' }}" required></td>
+                        <td><input type="text" class="form-control wide-input" name="project_type" value="{{ form_data['project_type'] if form_data else '' }}" required></td>
+                        <td><input type="date" class="form-control wide-input" name="start_date" value="{{ form_data['start_date'] if form_data else '' }}" required></td>
+                        <td><input type="date" class="form-control wide-input" name="end_date" value="{{ form_data['end_date'] if form_data else '' }}" required></td>
+                        <td><input type="number" class="form-control wide-input" name="aging_month" value="{{ form_data['aging_month'] if form_data else '' }}" required></td>
+                        <td>
+                            <select class="form-control wide-input" name="aging_group" required>
+                                <option value="Less than 3 months" {{ 'selected' if form_data and form_data.get('aging_group') == 'Less than 3 months' else '' }}>Less than 3 months</option>
+                                <option value="3-6 Months" {{ 'selected' if form_data and form_data.get('aging_group') == '3-6 Months' else '' }}>3-6 Months</option>
+                                <option value="6-9 Month" {{ 'selected' if form_data and form_data.get('aging_group') == '6-9 Months' else '' }}>6-9 Months</option>
+                                <option value="9-12 Months" {{ 'selected' if form_data and form_data.get('aging_group') == '9-12 Months' else '' }}>9-12 Months</option>
+                                <option value="More than 12 months" {{ 'selected' if form_data and form_data.get('aging_group') == 'More than 12 months' else '' }}>More than 12 months</option>
+                            </select>
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <input type="text" class="form-control {% if errors and errors.get('psg_p_budgeted') %}is-invalid{% endif %}" id="psg_p_budgeted" name="psg_p_budgeted" value="{{ form_data['psg_p_budgeted'] if form_data else '' }}" oninput="validateNumber(this)" required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">%</span>
+                                </div>
+                                <div class="invalid-feedback">{{ errors['psg_p_budgeted'] if errors and errors.get('psg_p_budgeted') else 'Solo se permiten números y decimales.' }}</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <input type="text" class="form-control {% if errors and errors.get('gp_budgeted_3rd_parties') %}is-invalid{% endif %}" id="gp_budgeted_3rd_parties" name="gp_budgeted_3rd_parties" value="{{ form_data['gp_budgeted_3rd_parties'] if form_data else '' }}" oninput="validateNumber(this)" required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">%</span>
+                                </div>
+                                <div class="invalid-feedback">{{ errors['gp_budgeted_3rd_parties'] if errors and errors.get('gp_budgeted_3rd_parties') else 'Solo se permiten números y decimales.' }}</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <input type="text" class="form-control {% if errors and errors.get('total_gp_budgeted') %}is-invalid{% endif %}" id="total_gp_budgeted" name="total_gp_budgeted" value="{{ form_data['total_gp_budgeted'] if form_data else '' }}" oninput="validateNumber(this)" required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">%</span>
+                                </div>
+                                <div class="invalid-feedback">{{ errors['total_gp_budgeted'] if errors and errors.get('total_gp_budgeted') else 'Solo se permiten números y decimales.' }}</div>
+                            </div>
+                        </td>
+                        <td>
+                            <select class="form-control wide-input" name="currency" required>
+                                <option value="USD" {{ 'selected' if form_data and form_data.get('currency') == 'USD' else '' }}>USD</option>
+                                <option value="CLP" {{ 'selected' if form_data and form_data.get('currency') == 'CLP' else '' }}>CLP</option>
+                                <option value="UF" {{ 'selected' if form_data and form_data.get('currency') == 'UF' else '' }}>UF</option>
+                            </select>
+                        </td>
+                        <td><input type="number" step="0.01" class="form-control" id="budgeted_ps_nntcl_revenue_po_currency" name="budgeted_ps_nntcl_revenue_po_currency" oninput="sumarPOCurrency()" required></td>
+                        <td><input type="number" step="0.01" class="form-control" id="budgeted_3rd_party_revenue_po_currency" name="budgeted_3rd_party_revenue_po_currency" oninput="sumarPOCurrency()" required></td>
+                        <td><input type="number" step="0.01" class="form-control" id="total_budgeted_revenue_po_currency" name="total_budgeted_revenue_po_currency" readonly></td>
+                        <td><input type="number" step="0.01" class="form-control" id="budgeted_ps_cost_po_currency" name="budgeted_ps_cost_po_currency" oninput="sumarPOCostCurrency()" required></td>
+                        <td><input type="number" step="0.01" class="form-control" id="budgeted_3rd_parties_cost_po_currency" name="budgeted_3rd_parties_cost_po_currency" oninput="sumarPOCostCurrency()" required></td>
+                        <td><input type="number" step="0.01" class="form-control" id="total_budgeted_cost_po_currency" name="total_budgeted_cost_po_currency" readonly></td>
+                        <td><input type="number" step="0.01" class="form-control" id="budgeted_ps_nntcl_revenue_usd" name="budgeted_ps_nntcl_revenue_usd" oninput="sumarRevenueUSD()" required></td>
+                        <td><input type="number" step="0.01" class="form-control" id="budgeted_3rd_party_revenue_usd" name="budgeted_3rd_party_revenue_usd" oninput="sumarRevenueUSD()" required></td>
+                        <td><input type="number" step="0.01" class="form-control" id="total_budgeted_revenue_usd" name="total_budgeted_revenue_usd" readonly></td>
+                        <td><input type="number" step="0.01" class="form-control" id="budgeted_ps_cost_usd" name="budgeted_ps_cost_usd" oninput="sumarCostUSD()" required></td>
+                        <td><input type="number" step="0.01" class="form-control" id="budgeted_3rd_parties_cost_usd" name="budgeted_3rd_parties_cost_usd" oninput="sumarCostUSD()" required></td>
+                        <td><input type="number" step="0.01" class="form-control" id="total_budgeted_cost_usd" name="total_budgeted_cost_usd" readonly></td>
+                        <td>
+                            <select class="form-control wide-input" name="subcontractor_currency" required>
+                                <option value="USD" {{ 'selected' if form_data and form_data.get('subcontractor_currency') == 'USD' else '' }}>USD</option>
+                                <option value="CLP" {{ 'selected' if form_data and form_data.get('subcontractor_currency') == 'CLP' else '' }}>CLP</option>
+                                <option value="UF" {{ 'selected' if form_data and form_data.get('subcontractor_currency') == 'UF' else '' }}>UF</option>
+                                <option value="Reais BRL" {{ 'selected' if form_data and form_data.get('subcontractor_currency') == 'Reais BRL' else '' }}>Reais BRL</option>
+                                <option value="Vacia" {{ 'selected' if form_data and form_data.get('subcontractor_currency') == 'Vacia' else '' }}>-</option>
+                            </select>
+                        </td>
+                        <td><input type="number" step="0.01" class="form-control wide-input" name="total_subcontractor_cost_rq_currency" value="{{ form_data['total_subcontractor_cost_rq_currency'] if form_data else '' }}" required></td>
+                        <td><input type="text" class="form-control wide-input" name="country" value="{{ form_data['country'] if form_data else '' }}" required></td>
+                            <td>
+                                <div class="input-group">
+                                    <input type="text" class="form-control {% if errors and errors.get('previous_fy_recognition') %}is-invalid{% endif %}" 
+                                           name="previous_fy_recognition" 
+                                           value="{{ form_data['previous_fy_recognition'] if form_data else '' }}" 
+                                           oninput="validateNumber(this)" required>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        {{ errors['previous_fy_recognition'] if errors and errors.get('previous_fy_recognition') else 'Solo se permiten números y decimales.' }}
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group">
+                                    <input type="text" class="form-control {% if errors and errors.get('actual_revenue_recognition_percent') %}is-invalid{% endif %}" 
+                                           name="actual_revenue_recognition_percent" 
+                                           value="{{ form_data['actual_revenue_recognition_percent'] if form_data else '' }}" 
+                                           readonly>
+                                    <div class="invalid-feedback">
+                                        {{ errors['actual_revenue_recognition_percent'] if errors and errors.get('actual_revenue_recognition_percent') else 'Solo se permiten números y decimales.' }}
+                                    </div>
+                                </div>
+                            </td>  
+                            <td>
+                                <div class="input-group">
+                                    <input type="text" class="form-control {% if errors and errors.get('pending_revenue_recognition_fy23_percent') %}is-invalid{% endif %}" 
+                                           name="pending_revenue_recognition_fy23_percent" 
+                                           value="{{ form_data['pending_revenue_recognition_fy23_percent'] if form_data else '' }}" 
+                                           oninput="validateNumber(this)" readonly>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        {{ errors['pending_revenue_recognition_fy23_percent'] if errors and errors.get('pending_revenue_recognition_fy23_percent') else 'Solo se permiten números y decimales.' }}
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="forecast_project_completed_fy23_percent" name="forecast_project_completed_fy23_percent" readonly value="{{ form_data.forecast_project_completed_fy23_percent }}"> 
+                                    <div class="invalid-feedback">
+                                        {{ errors['forecast_project_completed_fy23_percent'] if errors and errors.get('forecast_project_completed_fy23_percent') else 'Solo se permiten números y decimales.' }}
+                                    </div>
+                                </div>
+                            </td> 
+                        <td>
+                            <div class="input-group">
+                                <input type="text" class="form-control {% if errors and errors.get('actual_backlog_usd') %}is-invalid{% endif %}" 
+                                       name="actual_backlog_usd" 
+                                       value="{{ form_data['actual_backlog_usd'] if form_data else '' }}" 
+                                       readonly>
+                                <div class="invalid-feedback">
+                                    {{ errors['actual_backlog_usd'] if errors and errors.get('actual_backlog_usd') else 'Solo se permiten números y decimales.' }}
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <select class="form-control wide-input" name="project_state" required>
+                                <option value="Project completed" {{ 'selected' if form_data and form_data.get('project_state') == 'Project completed' else '' }}>Project completed</option>
+                                <option value="Cancelled" {{ 'selected' if form_data and form_data.get('project_state') == 'Cancelled' else '' }}>Cancelled</option>
+                                <option value="Stand By" {{ 'selected' if form_data and form_data.get('project_state') == 'Stand By' else '' }}>Stand By</option>
+                                <option value="Work In Progress" {{ 'selected' if form_data and form_data.get('project_state') == 'Work In Progress' else '' }}>Work In Progress</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-control wide-input" name="advanced_category2" readonly>
+                                <option value="0% - 25%" {% if form_data and form_data.get('advanced_category2') == '0% - 25%' %} selected {% endif %}>0% - 25%</option>
+                                <option value="25% - 50%" {% if form_data and form_data.get('advanced_category2') == '25% - 50%' %} selected {% endif %}>25% - 50%</option>
+                                <option value="50% - 75%" {% if form_data and form_data.get('advanced_category2') == '50% - 75%' %} selected {% endif %}>50% - 75%</option>
+                                <option value="75% - 100%" {% if form_data and form_data.get('advanced_category2') == '75% - 100%' %} selected {% endif %}>75% - 100%</option>
+                            </select>
+                        </td>
+                        <td><select class="form-control wide-input" name="tecnologia_principal" required>
+                            <option value="Select one">Select one</option>
+                            <option value="Security">Security</option>
+                            <option value="Hosting">Hosting</option>
+                            <option value="Networking">Networking</option>
+                            <option value="Cloud">Cloud</option>
+                            <option value="Wireless">Wireless</option>
+                            <option value="Collaboration">Collaboration</option>
+                            <option value="Datacenter">Datacenter</option>
+                            <option value="Collaboration">Collaboration</option>
+                            <option value="Other">Other</option>
+                            <option value="None">None</option>
+                        </select></td>
+                        <td><select class="form-control wide-input" name="tecnologia_secundaria" required>
+                            <option value="Select one">Select one</option>
+                            <option value="Security">Security</option>
+                            <option value="Hosting">Hosting</option>
+                            <option value="Networking">Networking</option>
+                            <option value="Cloud">Cloud</option>
+                            <option value="Wireless">Wireless</option>
+                            <option value="Collaboration">Collaboration</option>
+                            <option value="Datacenter">Datacenter</option>
+                            <option value="Collaboration">Collaboration</option>
+                            <option value="Other">Other</option>
+                            <option value="None">None</option>
+                        </select></td>
+                        <td><select class="form-control wide-input" name="tecnologia_secundaria2" required>
+                            <option value="Select one">Select one</option>
+                            <option value="Security">Security</option>
+                            <option value="Hosting">Hosting</option>
+                            <option value="Networking">Networking</option>
+                            <option value="Cloud">Cloud</option>
+                            <option value="Wireless">Wireless</option>
+                            <option value="Collaboration">Collaboration</option>
+                            <option value="Datacenter">Datacenter</option>
+                            <option value="Collaboration">Collaboration</option>
+                            <option value="Other">Other</option>
+                            <option value="None">None</option>
+                        </select></td>
+                        <td><input type="text" class="form-control wide-input" name="technical_lead"
+                                value="{{ form_data['technical_lead'] if form_data else '' }}" required></td>
+
+                        <td><input type="text" class="form-control wide-input" name="ingeniero1"></td>
+
+
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <tr>
+
+            <td class="field-name">Data upload by
+            </td>
+            <td>
+                <input type="text" class="form-control" id="responsible_name" name="responsible_name" value="{{ form_data['responsible_name'] if form_data else '' }}">
+                <small>Who has entered the data?</small>
+            </td>
+            <div class="btn-container">
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+    </form>
+    </div>
+
+
+</main>
+{% endblock %}
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    
+    function validateNumber(input) {
+    const value = input.value.replace(',', '.');
+    if (!isNaN(value) && value.trim() !== '') {
+        input.value = parseFloat(value).toFixed(2);
+        updateForecastProjectCompleted();
+    } else {
+        input.value = '';
+    }
+}
+
+function updateForecastProjectCompleted() {
+    const previousFyRecognition = parseFloat(document.querySelector('input[name="previous_fy_recognition"]').value) || 0;
+    const actualRevenueRecognition = parseFloat(document.querySelector('input[name="actual_revenue_recognition_percent"]').value) || 0;
+    const pendingRevenueRecognition = parseFloat(document.querySelector('input[name="pending_revenue_recognition_fy23_percent"]').value) || 0;
+
+    const forecastProjectCompleted = pendingRevenueRecognition + actualRevenueRecognition;
+    document.getElementById('forecast_project_completed_fy23_percent').value = forecastProjectCompleted.toFixed(2);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    updateForecastProjectCompleted();
+});
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelector('form').addEventListener('submit', function (event) {
+            var psgBudgetedInput = document.getElementById('psg_p_budgeted');
+            var gpBudgetedInput = document.getElementById('gp_budgeted_3rd_parties');
+            var totalBudgetedInput = document.getElementById('total_gp_budgeted');
+            var errorMessage = document.getElementById('error-message');
+            var valid = true;
+
+            // Validar los campos de porcentaje
+            [psgBudgetedInput, gpBudgetedInput, totalBudgetedInput].forEach(function (input) {
+                // Remover % para validar solo el número
+                let value = input.value.replace('%', '');
+                if (!/^\d*\.?\d*$/.test(value.replace(',', '.'))) {
+                    valid = false;
+                    input.classList.add('is-invalid');
+                } else {
+                    input.classList.remove('is-invalid');
+                }
+            });
+
+            // Mostrar mensaje de error y prevenir el envío del formulario si hay errores
+            if (!valid) {
+                errorMessage.style.display = 'block';
+                event.preventDefault();
+            } else {
+                errorMessage.style.display = 'none';
+                // Remover % para enviar solo el número
+                psgBudgetedInput.value = psgBudgetedInput.value.replace('%', '');
+                gpBudgetedInput.value = gpBudgetedInput.value.replace('%', '');
+                totalBudgetedInput.value = totalBudgetedInput.value.replace('%', '');
+            }
+        });
+    });
+
+    function formatDate(input) {
+        var dateValue = input.value;
+        var dateRegex = /^\d{2}\/\d{2}\/\d{2}$/;
+        if (dateRegex.test(dateValue)) {
+            var day = dateValue.substr(0, 2);
+            var month = dateValue.substr(3, 2);
+            var year = dateValue.substr(6, 2);
+            var formattedDate = day + '/' + month + '/' + year;
+            input.value = formattedDate;
+        }
+    }
+</script>

@@ -1,0 +1,225 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main class="m-5">
+    <!-- <div class="row">
+        <div class="col-md-6">
+            <h1>View Sales Orders</h1>
+            <form method="GET" action="/visualizar_so">
+                <div class="form-group">
+                    <label for="search_query">Search Sales Order</label>
+                    <input type="text" class="form-control" id="search_query" name="search_query"
+                        value="{{ search_query }}">
+                </div>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+
+        </div>
+    </div> -->
+    <h1 class="text-center">Professional Services - Backlog</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flash-messages flash-message">
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    <script>
+        // Desaparece el mensaje flash después de 5 segundos
+        setTimeout(function () {
+            var flashMessages = document.querySelectorAll('.flash-message .alert');
+            flashMessages.forEach(function (message) {
+                message.style.display = 'none';
+            });
+        }, 5000); // 5000 milisegundos = 5 segundos
+    </script>
+    {% endif %}
+    {% endwith %}
+    <div class="row">
+        <div class="col-md-6">
+
+            <h2>Search results</h2>
+            <form method="GET" action="/visualizar_so" class="form-inline">
+                <div class="form-group mr-2">
+                    <label for="search_query" class="mr-2">Search Sales Order</label>
+                    <input type="text" class="form-control" id="search_query" name="search_query"
+                        value="{{ search_query }}">
+                </div>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+    </div>
+    <!-- botón para añadir nueva sales order -->
+    <div class="d-flex justify-content-end mb-3">
+        <a class="btn btn-primary" href="/cargar_datos_manuales">New S.O</a>
+    </div>
+
+    <!-- botón para exportar a Excel -->
+    <div class="btn-container">
+        <form method="GET" action="/export_to_excel" class="mb-3">
+            <button type="submit" class="btn btn-primary">Export to Excel</button>
+        </form>
+    </div>
+
+    <div class="table-responsive mt-3" style="max-height: 700px; overflow-y: auto;">
+
+        <table id="tableSO" class="table table-striped mt-3">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>SO</th>
+                    <th>Client Name</th>
+                    <th>Group</th>
+                    <th>Project Name</th>
+                    <th>PO</th>
+                    <th>Direct Quote Approved</th>
+                    <th>Vendor</th>
+                    <th>MS</th>
+                    <th>Business Unit</th>
+                    <th>PM</th>
+                    <th>Project Type</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Aging Month</th>
+                    <th>Aging Group</th>
+                    <th>Psg P Budgedeted 3rd parties</th>
+                    <th>GP Budgedeted 3rd Parties</th>
+                    <th>Total GP Budgeted</th>
+                    <th>Currency</th>
+                    <th>Budgeted PS NTTCL Revenue PO Currency</th>
+                    <th>Budgeted 3rd party revenue po currency</th>
+                    <th>Total budgeted revenue po currency</th>
+                    <th>Budgeted ps cost po currency</th>
+                    <th>Budgeted 3rd parties cost po currency</th>
+                    <th>Total budgeted cost po currency</th>
+                    <th>Budgeted ps nntcl revenue usd</th>
+                    <th>Budgeted 3rd party revenue usd</th>
+                    <th>Total budgeted revenue usd</th>
+                    <th>Budgeted ps cost usd</th>
+                    <th>Budgeted 3rd parties cost usd</th>
+                    <th>Total budgeted cost usd</th>
+                    <th>Subcontrator currency</th>
+                    <th>Total subcontrator cost rq currency</th>
+                    <th>Country</th>
+                    <th>Previous fy recognition</th>
+                    <th>Actual revenue recognition percent</th>
+                    <th>Pending revenue recognition fy23 percent</th>
+                    <th>Forecast project completed fy23 percent</th>
+                    <th>Actual backlog usd</th>
+                    <th>Project state</th>
+                    <th>Advanced category 2</th>
+                    <th>Tecnologia principal</th>
+                    <th>Tecnologia secundaria</th>
+                    <th>Tecnologia secundaria 2</th>
+                    <th>Technical lead</th>
+                    <th>Ingeniero 1</th>
+                    <th>Ingeniero 2</th>
+                    <th>Ingeniero 3</th>
+                    <th>Ingeniero 4</th>
+                    <th>Ingeniero 5</th>
+                    <th>Ingeniero 6</th>
+                    <th>Ingeniero 7</th>
+                    <th>Responsable</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- TR ES UNA NUEVA FILA -->
+
+                {% for data in manual_data %}
+                <tr>
+                    <!-- <td class="field-name">1</td> -->
+                    <td>
+                        <a href="/editar_datos/{{ data.so }}" class="btn btn-primary mt-0"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="12" height="12" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                            <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                            <path d="M16 5l3 3" />
+                          </svg>
+                        </a>
+                        <a href="/detalles_so/{{ data.so }}" class="btn btn-primary">Details</a>
+                    </td>
+                    <td>{{ data.so }}</td>
+                    <td>{{ data.client_name }}</td>
+                    <td>{{ data.group }}</td>
+                    <td>{{ data.project_name }}</td>
+                    <td>{{ data.po }}</td>
+                    <td>{{ data.direct_quote_approved }}</td>
+                    <td>{{ data.vendor }}</td>
+                    <td>{{ data.ms }}</td>
+                    <td>{{ data.business_unit }}</td>
+                    <td>{{ data.pm }}</td>
+                    <td>{{ data.project_type }}</td>
+                    <td>{{ data.start_date }}</td>
+                    <td>{{ data.end_date }}</td>
+                    <td>{{ data.aging_month }}</td>
+                    <td>{{ data.aging_group }}</td>
+                    <td>{{ data.psg_p_budgeted }}</td>
+                    <td>{{ data.gp_budgeted_3rd_parties }}</td>
+                    <td>{{ data.total_gp_budgeted }}</td>
+                    <td>{{ data.currency }}</td>
+                    <td>{{ data.budgeted_ps_nntcl_revenue_po_currency }}</td>
+                    <td>{{ data.budgeted_3rd_party_revenue_po_currency }}</td>
+                    <td>{{ data.total_budgeted_revenue_po_currency }}</td>
+                    <td>{{ data.budgeted_ps_cost_po_currency }}</td>
+                    <td>{{ data.budgeted_3rd_parties_cost_po_currency }}</td>
+                    <td>{{ data.total_budgeted_cost_po_currency }}</td>
+                    <td>{{ data.budgeted_ps_nntcl_revenue_usd }}</td>
+                    <td>{{ data.budgeted_3rd_party_revenue_usd }}</td>
+                    <td>{{ data.total_budgeted_revenue_usd }}</td>
+                    <td>{{ data.budgeted_ps_cost_usd }}</td>
+                    <td>{{ data.budgeted_3rd_parties_cost_usd }}</td>
+                    <td>{{ data.total_budgeted_cost_usd }}</td>
+                    <td>{{ data.subcontractor_currency }}</td>
+                    <td>{{ data.total_subcontractor_cost_rq_currency }}</td>
+                    <td>{{ data.country }}</td>
+                    <td>{{ data.previous_fy_recognition }}</td>
+                    <td>{{ data.actual_revenue_recognition_percent }}</td>
+                    <td>{{ data.pending_revenue_recognition_fy23_percent }}</td>
+                    <td>{{ data.forecast_project_completed_fy23_percent }}</td>
+                    <td>{{ data.actual_backlog_usd }}</td>
+                    <td>{{ data.project_state }}</td>
+                    <td>{{ data.advanced_category2 }}</td>
+                    <td>{{ data.tecnologia_principal }}</td>
+                    <td>{{ data.tecnologia_secundaria }}</td>
+                    <td>{{ data.tecnologia_secundaria2 }}</td>
+                    <td>{{ data.technical_lead }}</td>
+                    <td>{{ data.ingeniero1 }}</td>
+                    <td>{{ data.ingeniero2 }}</td>
+                    <td>{{ data.ingeniero3 }}</td>
+                    <td>{{ data.ingeniero4 }}</td>
+                    <td>{{ data.ingeniero5 }}</td>
+                    <td>{{ data.ingeniero6 }}</td>
+                    <td>{{ data.ingeniero7 }}</td>
+                    <td>{{ data.responsible_name }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+</main>
+
+<script type="text/javascript">
+    new DataTable('#tableSO', {
+        searching: false,
+        language: {
+            lengthMenu: ' _MENU_  entries per page'
+        },
+        lengthMenu: [[5, 10, 15, 20, -1],
+        ['5 registros', '10 registros', '15 registros', '20 registros', 'Mostrar todo']
+        ],
+    });
+</script>
+{% endblock %}
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<style>
+    .flash-message {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+    }
+</style>

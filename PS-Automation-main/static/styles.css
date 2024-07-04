@@ -1,0 +1,203 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-image: url('/static/fondo_detalles.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Estilo para el navbar */
+.navbar {
+  background-color: #007bff;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Margen superior para el contenido principal para evitar superposición con el navbar */
+main {
+  margin-top: 60px;
+  background-color: rgba(255, 255, 255, 0.89);
+  /* Fondo blanco semitransparente */
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 15px 15px rgba(0, 0, 0, 0.315);
+  max-width: auto;
+  margin: auto;
+  width: auto;
+  height: auto;
+}
+
+/* Estilo personalizado para la imagen en el navbar */
+.navbar-img {
+  width: 100px;
+  height: auto;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  /* Otras propiedades de estilo, si es necesario */
+}
+
+/* Estilo para el logo en el navbar */
+.navbar-logo {
+  font-size: 24px;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* Estilo para los encabezados de las tablas */
+table th {
+  background-color: #007bff;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+/* Estilo para las celdas de datos en las tablas */
+table td {
+  text-align: center;
+  padding: 8px;
+}
+
+
+
+/* Estilo para los enlaces */
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #0056b3;
+}
+
+/* Estilo para el texto vertical */
+.vertical-text {
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Estilo para los campos de entrada de texto */
+input[type="text"],
+input[type="number"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
+
+/* Estilo para las tablas */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  max-height: 400px;
+  /* Altura máxima para habilitar el scroll vertical */
+  overflow-y: auto;
+  /* Habilita el scroll vertical */
+}
+
+.wide-input {
+  width: 100%;
+  /* Asegura que el campo de entrada ocupe todo el ancho de la celda */
+}
+
+.table th,
+.table td {
+  padding: 8px 10px;
+  /* Reducir el padding para ocupar menos espacio */
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.table th {
+  
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-bottom: 2px solid #ddd;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f2f2f2;
+}
+
+.field-name {
+  font-weight: bold;
+}
+
+/* Media Query para dispositivos móviles */
+@media (max-width: 768px) {
+
+  .table th,
+  .table td {
+    width: auto;
+    /* Ajuste automático en dispositivos móviles */
+    white-space: normal;
+    /* Permitir saltos de línea */
+  }
+}
+
+.my-custom-card {
+  box-shadow: 0 15px 15px rgba(0, 0, 0, 0.315);
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.89);
+  padding: 20px;
+}
+
+.img-container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.img-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Estilos para Boton editar en Detalles.html  */
+.card-title {
+  display: flex;
+  align-items: center;
+}
+
+.card-title .btn {
+  display: flex;
+  align-items: center;
+}
+
+/* Estilo para boton de th {ingenieros} */
+.th-with-button .btn {
+  font-size: 13px;
+  font-weight: bold;
+  vertical-align: bottom;
+}

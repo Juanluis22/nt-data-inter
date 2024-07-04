@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Envejecimiento de Proyecto</h1>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Previous FY Recognition</th>
+                <th>Actual Revenue Recognition</th>
+                <th>Pending Revenue Recognition FY21</th>
+                <th>Forecast Project Completed FY21</th>
+                <th>Actual Backlog USD</th>
+                <th>Project State</th>
+                <th>Advanced Category2</th>
+                <!-- Agrega otros encabezados necesarios -->
+                <th>Nuevo Encabezado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in data %}
+            <tr>
+                <td>{{ item.date }}</td> <!-- Agrega esta línea para mostrar la fecha -->
+                <td>{{ item.previous_fy_recognition }}</td>
+                <td>{{ item.actual_revenue_recognition }}</td>
+                <td>{{ item.pending_revenue_recognition_fy21 }}</td>
+                <td>{{ item.forecast_project_completed_fy21 }}</td>
+                <td>{{ item.actual_backlog_usd }}</td>
+                <td>{{ item.project_state }}</td>
+                <td>{{ item.advanced_category2 }}</td>
+                <!-- Agrega otras celdas para otros campos necesarios -->
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

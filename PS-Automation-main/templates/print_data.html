@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manual Data</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- agregar estilos CSS para la impresión -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='print-styles.css') }}" media="print">
+</head>
+<body>
+    <div class="container">
+        <h1>Manual Data</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Sales Order</th>
+                    <th>Previous FY Recognition</th>
+                    <th>Actual Revenue Recognition</th>
+                    <th>Pending Revenue Recognition FY21</th>
+                    <th>Forecast Project Completed FY21</th>
+                    <th>Actual Backlog USD</th>
+                    <th>Project State</th>
+                    <th>Advanced Category2</th>
+                    <th>Real Total Recognition</th>
+                    <th>Forecast Total Recognition</th>
+                    <th>3rd Party Recognition</th>
+                    <th>Forecast Advance %</th>
+                    <th>Forecast Project Completed %</th>
+                    <th>Real Advance %</th>
+                    <th>Real Project Completed %</th>
+                    <th>Responsible name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in manual_data %}
+                <tr>
+                    <td>{{ data.sales_order }}</td>
+                    <td>{{ data.previous_fy_recognition }}</td>
+                    <td>{{ data.actual_revenue_recognition }}</td>
+                    <td>{{ data.pending_revenue_recognition_fy21 }}</td>
+                    <td>{{ data.forecast_project_completed_fy21 }}</td>
+                    <td>{{ data.actual_backlog_usd }}</td>
+                    <td>{{ data.project_state }}</td>
+                    <td>{{ data.advanced_category2 }}</td>
+                    <td>{{ data.real_total_recognition }}</td>
+                    <td>{{ data.forecast_total_recognition }}</td>
+                    <td>{{ data.third_party_recognition }}</td>
+                    <td>{{ data.forecast_advance }}</td>
+                    <td>{{ data.forecast_project_completed }}</td>
+                    <td>{{ data.real_advance }}</td>
+                    <td>{{ data.real_project_completed }}</td>
+                    <td>{{ data.responsible_name }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

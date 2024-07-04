@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main class="m-5">
+    <h1 class="text-center">Datos de Forecast para el Mes de {{ mes | capitalize }}</h1>
+    
+    <div class="table-responsive mt-3" style="max-height: 700px; overflow-y: auto;">
+        <table id="tableForecast" class="table table-striped mt-3">
+            <thead>
+                <tr>
+                    <th>SO ID</th>
+                    <th>Forecast Advance {{ mes.capitalize() }} Percent</th>
+                    <th>Forecast Project Completed {{ mes.capitalize() }} Percent</th>
+                    <th>Forecast Total Recognition {{ mes.capitalize() }} USD</th>
+                    <th>Real Advance {{ mes.capitalize() }} Percent</th>
+                    <th>Real Project Completed {{ mes.capitalize() }} Percent</th>
+                    <th>Real Total Recognition {{ mes.capitalize() }} USD</th>
+                    {% if mes == 'mar' %}
+                        <th>Real PS Recognition Mar USD</th>
+                        <th>Real Contractor Recognition Mar USD</th>
+                        <th>Real Backlog Mar USD</th>
+                        <th>Real Total Cost Mar USD</th>
+                        <th>Real Cost PS Mar USD</th>
+                        <th>Real Cost 3rd Party Mar USD</th>
+                        <th>Real Total Recognition Mar Currency PO</th>
+                        <th>Real PS Recognition Mar Currency PO</th>
+                        <th>Real Contractor Recognition Mar Currency PO</th>
+                        <th>Real Total Cost Mar Currency PO</th>
+                        <th>Real Cost PS Mar Currency PO</th>
+                        <th>Real Cost 3rd Party Mar Currency PO</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for forecast in forecasts %}
+                <tr>
+                    <td>{{ forecast.so_id }}</td>
+                    <td>{{ forecast['forecast_advance_' ~ mes ~ '_percent'] }}</td>
+                    <td>{{ forecast['forecast_project_completed_' ~ mes ~ '_percent'] }}</td>
+                    <td>{{ forecast['forecast_total_recognition_' ~ mes ~ '_usd'] }}</td>
+                    <td>{{ forecast['real_advance_' ~ mes ~ '_percent'] }}</td>
+                    <td>{{ forecast['real_project_completed_' ~ mes ~ '_percent'] }}</td>
+                    <td>{{ forecast['real_total_recognition_' ~ mes ~ '_usd'] }}</td>
+                    {% if mes == 'mar' %}
+                        <td>{{ forecast.real_ps_recognition_mar_usd }}</td>
+                        <td>{{ forecast.real_contractor_recognition_mar_usd }}</td>
+                        <td>{{ forecast.real_backlog_mar_usd }}</td>
+                        <td>{{ forecast.real_total_cost_mar_usd }}</td>
+                        <td>{{ forecast.real_cost_ps_mar_usd }}</td>
+                        <td>{{ forecast.real_cost_3rd_party_mar_usd }}</td>
+                        <td>{{ forecast.real_total_recognition_mar_currency_po }}</td>
+                        <td>{{ forecast.real_ps_recognition_mar_currency_po }}</td>
+                        <td>{{ forecast.real_contractor_recognition_mar_currency_po }}</td>
+                        <td>{{ forecast.real_total_cost_mar_currency_po }}</td>
+                        <td>{{ forecast.real_cost_ps_mar_currency_po }}</td>
+                        <td>{{ forecast.real_cost_3rd_party_mar_currency_po }}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+{% endblock %}
